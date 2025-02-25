@@ -10,33 +10,33 @@ def calculate_bearing():
         lat1, lon1, lat2, lon2 = miesto1[0], miesto1[1], miesto2[0], miesto2[1]
         lat1, lon1, lat2, lon2 = float(lat1), float(lon1), float(lat2), float(lon2)  
 
-        # Convert degrees to radians
+        # konvertovanie stupnov na radiány
         lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
         
-        # Compute differences
+        # výpocet rozdielu
         dlat = lat2 - lat1
         dlon = lon2 - lon1
 
-        # Compute initial bearing
+        # vypocet zaciatocnych azimutov
         x = math.sin(dlon) * math.cos(lat2)
         y = math.cos(lat1) * math.sin(lat2) - math.sin(lat1) * math.cos(lat2) * math.cos(dlon)
         
         initial_bearing = math.atan2(x, y)
         
-        # Convert radians to degrees
+        # zmena radianov na stupne
         initial_bearing = math.degrees(initial_bearing)
         
-        # Normalize to 0–360 degrees
+        # zemna 0-360
         compass_bearing = round((initial_bearing + 360) % 360, 2)
 
-        # Radius of Earth in km (use 3958.8 for miles)
+        # radius zeme
         R = 6371  
 
         # Haversine formula
         a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
         
-        # Compute distance
+        # vypocet vzdialenosti
         distance = round(R * c, 2)
         
         #vysledky smeru a vzdialenosti
@@ -100,8 +100,8 @@ for widget in udaje_miesta.winfo_children():
     widget.grid(padx=5, pady=5)
 
 # tlacidlo na vypocet
-button = tkinter.Button(frame, text="Vypočítať", command=calculate_bearing)
-button.grid(column=0, row=1, sticky="nesw", padx=10, pady=10)
+button = tkinter.Button(frame, text="Vypočítať", command=calculate_bearing, width=20)
+button.grid(column=0, row=1,  padx=10, pady=10)
 
 #zadane hodnoty
 zadane_hodnoty = tkinter.LabelFrame(frame, text="Zadané hodnoty")
@@ -131,10 +131,10 @@ smer_frame.grid(column=0, row=0,padx=5, pady=5)
 vzdialenost_frame = tkinter.LabelFrame(vysledok, text="Vzdialenosť")
 vzdialenost_frame.grid(column=1, row=0,padx=5, pady=5)
 
-vysledok_label_smer = tkinter.Label(smer_frame, text="0",width=15, font=("Helvetica", 16))
+vysledok_label_smer = tkinter.Label(smer_frame, text="0",width=13, font=("Helvetica", 16))
 vysledok_label_smer.grid(column=0, row=0)
 
-vysledok_label_vzdialenost = tkinter.Label(vzdialenost_frame, text="0",width=15, font=("Helvetica", 16))
+vysledok_label_vzdialenost = tkinter.Label(vzdialenost_frame, text="0",width=13, font=("Helvetica", 16))
 vysledok_label_vzdialenost.grid(column=0, row=0)
 
 window.mainloop()
